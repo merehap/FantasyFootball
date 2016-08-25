@@ -3,6 +3,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
 
@@ -18,13 +19,17 @@ public class SetupPanel extends JPanel implements ActionListener {
 	private final JButton addMeButton;
 	private final JButton finalizeSetupButton;
 	
-	public SetupPanel() {
+	private final JScrollPane drafterPane;
+	
+	public SetupPanel(final JScrollPane drafterPane) {
 
 		this.playerNameTextField = new JTextField("Drafter Name");
 		
 		this.addDrafterButton = new JButton("Add Drafter");
 		this.addMeButton = new JButton("Add Me");
 		this.finalizeSetupButton = new JButton("Finalize Setup");
+		
+		this.drafterPane = drafterPane;
 
 		add(this.playerNameTextField);
 		add(this.addDrafterButton);
@@ -47,7 +52,8 @@ public class SetupPanel extends JPanel implements ActionListener {
 		} else if(source == this.addMeButton) {
 			
 		} else if(source == this.finalizeSetupButton) {
-			
+			this.setVisible(false);
+			this.drafterPane.setVisible(true);
 		}
 	}
 

@@ -1,4 +1,6 @@
+import java.awt.BorderLayout;
 import java.awt.Container;
+import java.awt.Dimension;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.FileReader;
@@ -10,17 +12,19 @@ import java.util.List;
 import java.util.Map;
 
 import javax.swing.*;
+import javax.swing.table.AbstractTableModel;
+import javax.swing.table.TableModel;
 
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVRecord;
 
 public class Main {
 	public static void main(String[] args) throws IOException {
-		
+
 		int drafterPosition = 4;
-	    JFrame f = new MyFrame();
-	    f.setVisible(true);
-	  }
+		JFrame f = new MyFrame();
+		f.setVisible(true);
+	}
 	
 	public static class MyFrame extends JFrame {
 		private static final long serialVersionUID = 1L;
@@ -49,9 +53,32 @@ public class Main {
 			
 			Container contentPane = this.getContentPane();
 			
+			TableModel dataModel = new AbstractTableModel() {
 
-			contentPane.add(new SetupPanel()); 
+				private static final long serialVersionUID = 1L;
 				
+				public int getColumnCount() {
+					return 1;
+				}
+
+				public int getRowCount() {
+					return 10;
+				}
+
+				public Object getValueAt(int row, int col) {
+					return new Integer(row * col);
+				}
+			};
+			
+			JTable table = new JTable(dataModel);
+			
+			JScrollPane drafterPane = new JScrollPane(table);
+
+			drafterPane.setVisible(false);
+			
+			contentPane.add(new SetupPanel(drafterPane), BorderLayout.NORTH);
+			
+			contentPane.add(drafterPane);
 
 			// Window Listeners
 			addWindowListener(new WindowAdapter() {
