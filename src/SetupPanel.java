@@ -1,9 +1,9 @@
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
 
@@ -19,9 +19,12 @@ public class SetupPanel extends JPanel implements ActionListener {
 	private final JButton addMeButton;
 	private final JButton finalizeSetupButton;
 	
-	private final JScrollPane drafterPane;
+	private final DraftPanel drafterPane;
+	private final List<List<String>> drafterInfos;
 	
-	public SetupPanel(final JScrollPane drafterPane) {
+	public SetupPanel(
+			final DraftPanel drafterPane,
+			final List<List<String>> drafterInfos) {
 
 		this.playerNameTextField = new JTextField("Drafter Name");
 		
@@ -30,6 +33,7 @@ public class SetupPanel extends JPanel implements ActionListener {
 		this.finalizeSetupButton = new JButton("Finalize Setup");
 		
 		this.drafterPane = drafterPane;
+		this.drafterInfos = drafterInfos;
 
 		add(this.playerNameTextField);
 		add(this.addDrafterButton);
@@ -48,12 +52,16 @@ public class SetupPanel extends JPanel implements ActionListener {
 		Object source = actionEvent.getSource();
 		
 		if(source == this.addDrafterButton) {
-			
+			this.drafterInfos.get(0).add(this.playerNameTextField.getText());
+			this.drafterInfos.get(1).add("");
+			this.playerNameTextField.setText("");
 		} else if(source == this.addMeButton) {
-			
+			this.drafterInfos.get(0).add("Me");
+			this.drafterInfos.get(1).add("");
 		} else if(source == this.finalizeSetupButton) {
 			this.setVisible(false);
 			this.drafterPane.setVisible(true);
+			this.drafterPane.updateTable();
 		}
 	}
 

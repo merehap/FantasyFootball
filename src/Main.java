@@ -1,19 +1,14 @@
 import java.awt.BorderLayout;
 import java.awt.Container;
-import java.awt.Dimension;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.swing.*;
-import javax.swing.table.AbstractTableModel;
-import javax.swing.table.TableModel;
 
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVRecord;
@@ -21,7 +16,6 @@ import org.apache.commons.csv.CSVRecord;
 public class Main {
 	public static void main(String[] args) throws IOException {
 
-		int drafterPosition = 4;
 		JFrame f = new MyFrame();
 		f.setVisible(true);
 	}
@@ -44,41 +38,24 @@ public class Main {
 			}
 			
 			PlayerHierarchy hierarchy = new PlayerHierarchy(players);
-			Drafter drafter = new SimpleDrafter();
-			drafter.draftBestChoice(hierarchy);
-			drafter.draftBestChoice(hierarchy);
-			setTitle(drafter.draftBestChoice(hierarchy).getName());
-			setSize(600,200); // default size is 0,0
-			setLocation(10,200); // default is 0,0 (top left corner)
+			setTitle("Fantasy Football Drafter");
+			setSize(600,600);
+			setLocation(10,200);
 			
 			Container contentPane = this.getContentPane();
 			
-			TableModel dataModel = new AbstractTableModel() {
-
-				private static final long serialVersionUID = 1L;
-				
-				public int getColumnCount() {
-					return 1;
-				}
-
-				public int getRowCount() {
-					return 10;
-				}
-
-				public Object getValueAt(int row, int col) {
-					return new Integer(row * col);
-				}
-			};
+			final List<List<String>> drafterInfos = new ArrayList<>();
+			drafterInfos.add(new ArrayList<String>());
+			drafterInfos.add(new ArrayList<String>());
 			
-			JTable table = new JTable(dataModel);
-			
-			JScrollPane drafterPane = new JScrollPane(table);
+			DraftPanel draftPanel =
+					new DraftPanel(players, drafterInfos, hierarchy);
+			draftPanel.setVisible(false);
 
-			drafterPane.setVisible(false);
-			
-			contentPane.add(new SetupPanel(drafterPane), BorderLayout.NORTH);
-			
-			contentPane.add(drafterPane);
+			contentPane.add(
+					new SetupPanel(draftPanel, drafterInfos),
+					BorderLayout.NORTH);
+			contentPane.add(draftPanel);
 
 			// Window Listeners
 			addWindowListener(new WindowAdapter() {

@@ -38,8 +38,31 @@ public class PlayerHierarchy {
 		return this.map.get(position).get(0);
 	}
 	
+	public Player getBestPlayer() {
+		
+		Player bestPlayer = null;
+		for(Player.Position position : Player.Position.values()) {
+			Player candidate = this.getBestPlayerAtPosition(position);
+			if(bestPlayer == null || candidate.getVor() > bestPlayer.getVor()) {
+				bestPlayer = candidate;
+			}
+		}
+		
+		return bestPlayer;
+	}
+	
 	public Player removeBestPlayerAtPosition(Player.Position position) {
 		return this.map.get(position).remove(0);
+	}
+	
+	public void removePlayerByName(String name) {
+		for(List<Player> players : this.map.values()) {
+			for(int index = 0; index < players.size(); index++) {
+				if(players.get(index).getName().equals(name)) {
+					players.remove(index);
+				}
+			}
+		}
 	}
 	
 	public PlayerHierarchy removePositions(Set<Player.Position> positions) {
