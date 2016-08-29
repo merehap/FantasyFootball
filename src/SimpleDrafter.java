@@ -5,8 +5,6 @@ public final class SimpleDrafter extends Drafter {
 	public Player chooseBestChoice(PlayerHierarchy hierarchy) {
 		
 		if(super.allPositionsFilled()) {
-			System.out.println("ALL POSITIONS FILLED");
-			super.bench.add(hierarchy.getBestPlayer());
 			return hierarchy.getBestPlayer();
 		}
 		
@@ -27,7 +25,6 @@ public final class SimpleDrafter extends Drafter {
 		
 		if(bestPlayer.getVor() < hierarchy.getBestPlayer().getVor()
 				&& !super.hasFlexPlayer()) {
-			System.out.println("Has flex player " + super.hasFlexPlayer());
 			return hierarchy.getBestPlayer();
 		}
 		

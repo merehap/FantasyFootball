@@ -3,14 +3,17 @@ public class Player {
 	private final String name;
 	private final Position position;
 	private final double vor;
+	private final double previousSeasonPoints;
 	
 	public Player(
 			final String name,
 			final Position position,
-			final double vor) {
+			final double vor,
+			final double previousSeasonPoints) {
 		this.name = name;
 		this.position = position;
 		this.vor = vor;
+		this.previousSeasonPoints = previousSeasonPoints;
 	}
 	
 	public String getName() {
@@ -23,6 +26,10 @@ public class Player {
 	
 	public double getVor() {
 		return this.vor;
+	}
+	
+	public double getPreviousSeasonPoints() {
+		return this.previousSeasonPoints;
 	}
 	
 	public static enum Position {

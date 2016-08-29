@@ -8,9 +8,29 @@ public abstract class Drafter {
 	private List<Player> starters;
 	protected List<Player> bench;
 	
+	private String name;
+	private Player lastPick;
+	
 	public Drafter() {
 		this.starters = new ArrayList<>();
 		this.bench = new ArrayList<>();
+	}
+	
+	public String getName() {
+		return this.name;
+	}
+	
+	public Player getLastPick() {
+		return this.lastPick;
+	}
+	
+	public double totalStarterPreviousSeasonPoints() {
+		double sum = 0;
+		for(Player starter : this.starters) {
+			sum += starter.getPreviousSeasonPoints();
+		}
+		
+		return sum;
 	}
 	
 	/*
@@ -29,7 +49,13 @@ public abstract class Drafter {
 		Player bestChoice =
 				hierarchy.removeBestPlayerAtPosition(chosenPlayer.getPosition());
 
-		this.starters.add(bestChoice);
+		if(this.allPositionsFilled()) {
+			this.bench.add(bestChoice);
+		} else {
+			this.starters.add(bestChoice);
+		}
+		
+		this.lastPick = bestChoice;
 		
 		return bestChoice;
 	}

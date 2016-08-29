@@ -34,7 +34,8 @@ public class Main {
 				players.add(new Player(
 						record.get(2),
 						Player.Position.fromCode(record.get(3)),
-						Double.parseDouble(record.get(7))));
+						Double.parseDouble(record.get(7)),
+						Double.parseDouble(record.get(8))));
 			}
 			
 			PlayerHierarchy hierarchy = new PlayerHierarchy(players);
@@ -45,6 +46,7 @@ public class Main {
 			Container contentPane = this.getContentPane();
 			
 			final List<List<String>> drafterInfos = new ArrayList<>();
+			drafterInfos.add(new ArrayList<String>());
 			drafterInfos.add(new ArrayList<String>());
 			drafterInfos.add(new ArrayList<String>());
 			

@@ -55,14 +55,16 @@ public class PlayerHierarchy {
 		return this.map.get(position).remove(0);
 	}
 	
-	public void removePlayerByName(String name) {
+	public Player removePlayerByName(String name) {
 		for(List<Player> players : this.map.values()) {
 			for(int index = 0; index < players.size(); index++) {
 				if(players.get(index).getName().equals(name)) {
-					players.remove(index);
+					return players.remove(index);
 				}
 			}
 		}
+		
+		return null;
 	}
 	
 	public PlayerHierarchy removePositions(Set<Player.Position> positions) {
